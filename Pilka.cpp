@@ -43,67 +43,47 @@ void Pilka::collideWalls(float width, float height)//kolizje ze scianami
     shape.setPosition(x, y);
 }
 
-bool Pilka::colidePaddle(const Paletka& p)//kolizja pilki i paletki 
+bool Pilka::colidePaddle(const Paletka& p)
 {
-    float lewaKrawedzPaletki = p.getX() - p.getSzerokosc() / 2;
-    float prawaKrawedzPaletki = p.getX() + p.getSzerokosc() / 2;
-    float gornaKrawedzPaletki = p.getY() - p.getWysokosc() / 2;
-    float dolnaKrawedzPaletki = p.getY() + p.getWysokosc() / 2;
+    float lewa = p.getX() - p.getSzerokosc() / 2;
+    float prawa = p.getX() + p.getSzerokosc() / 2;
+    float gora = p.getY() - p.getWysokosc() / 2;
+    float dol = p.getY() + p.getWysokosc() / 2;
 
-    if (x + radius >= lewaKrawedzPaletki &&
-        x - radius <= prawaKrawedzPaletki &&
-        y + radius >= gornaKrawedzPaletki &&
-        y - radius <= dolnaKrawedzPaletki)
+    if (x + radius >= lewa && x - radius <= prawa &&
+        y + radius >= gora && y - radius <= dol)
     {
-       
-        float odlegloscOdLewej = std::abs(x - lewaKrawedzPaletki);//odleglosci od krawedzi paletki
-        float odlegloscOdPrawej = std::abs(x - prawaKrawedzPaletki);
-        float odlegloscOdGory = std::abs(y - gornaKrawedzPaletki);
-        float odlegloscOdDolu = std::abs(y - dolnaKrawedzPaletki);
+        //odleg³oœci od krawêdzi
+        float odLewa = std::abs((x - radius) - lewa);
+        float odPrawa = std::abs((x + radius) - prawa);
+        float odGora = std::abs((y - radius) - gora);
+        float odDol = std::abs((y + radius) - dol);
 
-        
-        float najblizszaKrawedz = odlegloscOdLewej;
-        int ktoraStrona = 0; // 0-lewo, 1-prawo, 2-góra, 3-dó³
+        float minOdleglosc = odLewa;
+        int strona = 0; //0-lewo,1-prawo,2-góra,3-dó³
 
-        if (odlegloscOdPrawej < najblizszaKrawedz) {
-            najblizszaKrawedz = odlegloscOdPrawej;
-            ktoraStrona = 1;
-        }
-        if (odlegloscOdGory < najblizszaKrawedz) {
-            najblizszaKrawedz = odlegloscOdGory;
-            ktoraStrona = 2;
-        }
-        if (odlegloscOdDolu < najblizszaKrawedz) {
-            najblizszaKrawedz = odlegloscOdDolu;
-            ktoraStrona = 3;
-        }
+        if (odPrawa < minOdleglosc) { minOdleglosc = odPrawa; strona = 1; }
+        if (odGora < minOdleglosc) { minOdleglosc = odGora; strona = 2; }
+        if (odDol < minOdleglosc) { minOdleglosc = odDol; strona = 3; }
 
-        
-        if (ktoraStrona == 0 || ktoraStrona == 1) {//jak ma sie odbic pilka
-            bounceX();//bok
-            //ustawienie paletki
-            if (ktoraStrona == 0) {//lewa strona
-                x = lewaKrawedzPaletki - radius;
-            }
-            else {//prawa strona
-                x = prawaKrawedzPaletki + radius;
-            }
+        if (strona == 0 || strona == 1) {
+            bounceX();
+            if (strona == 0) x = lewa - radius;
+            else x = prawa + radius;
         }
-        else { 
-            vy = -std::abs(vy); //osbicie od gory
-
-            //ustawienie paletki
-            if (ktoraStrona == 2) {//góra
-                y = gornaKrawedzPaletki - radius;
-            }
-            else {//dó³
-                y = dolnaKrawedzPaletki + radius;
-            }
+        if (strona == 2) {
+            vy = -std::abs(vy);
+            y = gora - radius;
+        }
+        else {
+            vy = std::abs(vy);
+            y = dol + radius;
         }
 
         shape.setPosition(x, y);
         return true;
     }
+
     return false;
 }
 
