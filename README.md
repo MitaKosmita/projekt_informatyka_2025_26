@@ -7,10 +7,10 @@ W tle generowane jest losowe, gwieździste niebo, które ma imitować kosmos i n
 
 Gra posiada 9 klas oraz spełnia wymagania projektu narzucone przez prowadzącego. Poniżej krótkie wyjaśnienie spełnienia każdego wymogu 
 Klasy:
-    Game - zarzadzanie rozgrywka
-    Paletka, Pilka, Stone - obiekty gry 
-    Kamien - animacja pod koniec gry
-    Menu, MenuPauzy - interfejs
+    Game - zarzadzanie rozgrywka;
+    Paletka, Pilka, Stone - obiekty gry ;
+    Kamien - animacja pod koniec gry;
+    Menu, MenuPauzy - interfejs;
     StatusGry, Zapis - system zapisu
 
 Wymagania:
@@ -46,4 +46,5 @@ Punkty 5 i 6 są zrealizowane razem
     Kamien - animacja pod koniec gry
     Menu, MenuPauzy - interfejs
     StatusGry - przechwytywanie stanu gry 
+
 
